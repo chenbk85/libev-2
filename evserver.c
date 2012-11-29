@@ -25,7 +25,7 @@ void generic_handler(struct evhttp_request *req, void *arg)
 	evbuffer_add_printf(buf, "Requested: %s\n\n", evhttp_request_uri(req));
 	char command[100]="/bin/cat ";
 	char tmpText[500];
-	char lastText[1000];
+	char lastText[1000000]="";
 	strcat(command,evhttp_request_uri(req));
 	strcat(command," > tmp");
 	system(command);
@@ -36,6 +36,7 @@ void generic_handler(struct evhttp_request *req, void *arg)
 		if(tmpState==NULL){
 			break;
 		}
+		strcat(lastText,"<br>");
 		strcat(lastText,tmpText);	
 	}
 	evbuffer_add_printf(buf,lastText);				
